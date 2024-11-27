@@ -1,7 +1,7 @@
 const Perfumes = [
     {
         id:1,
-        name: "Afnan Supremacy Not Only Intense",
+        name: " Supremacy Not Only Intense",
         cost: "3300 Rs",
         url:"./pages/perfume1.html",
         img:"./assets/rn-image_picker_lib_temp_a3791f6e-a304-4732-a5a0-7b50b1639f53.webp"
@@ -60,50 +60,6 @@ const Perfumes = [
         cost: "300 Rs",
         img: "./assets/61nyqWXDm7L._SX679_.jpg"
     },
-    {
-        id:11,
-        name: "Embark My Life",
-        cost: "1200 Rs",
-        img: "./assets/for him(4).png"
-    },
-    {
-        id:11,
-        name: "Hasan Oud Arabia",
-        cost: "1200 Rs",
-        img: "./assets/na-spirit-of-kanpur-attar-deep-rich-notes-of-jasmine-hasan-oud-original-imagzyy3z5rz54zy.webp"  
-    },
-    {
-        
-        id:12,
-        name: "Al Rehab choco Musk",
-        cost: "300 Rs",
-        img: "./assets/al-rehab-choco-musk-1-e1684248510810.webp"  
-    },
-    {
-        id:13,
-        name: "Fragrance & Fashion Chocolate",
-        cost: "499",
-        img:"./assets/ChocolatePerfumeAttarcopy.webp"
-    },
-    {
-        id:14,
-        name: "wild stone Steel",
-        cost: "200",
-        img:"./assets/0b525640-a248-48ab-8a7d-326b195df4a0.png"
-    },
-    {
-        id:15,
-        name:"Bella Vita Oud",
-        cost: "199",
-        img: "./assets/8YcirBu8d-1135089_5.avif"
-    },
-    {
-        id:16,
-        name: "Denever Prestige",
-        Cost: "190",
-        img: "./assets/06_8c71fd8c-23d5-4760-ab83-a60501b78e64_800x.webp"
-    }
-    
 ]
 
 
@@ -120,6 +76,7 @@ window.addEventListener('load', () =>{
           <h6>${name}</h6>
           <p>${cost}</p>
         </div>`
+        
       search2.appendChild(card);
 
     })

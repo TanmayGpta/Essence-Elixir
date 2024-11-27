@@ -40,7 +40,7 @@ const addDataToHTML = () => {
 };
 
 const initApp = () => {
-    // get data from json
+
     fetch('products.json')
     .then(response => response.json())
     .then(data => {
