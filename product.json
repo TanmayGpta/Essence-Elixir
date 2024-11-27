@@ -1,0 +1,30 @@
+[
+    {
+      "id": 1,
+      "image": "./assets/rn-image_picker_lib_temp_a3791f6e-a304-4732-a5a0-7b50b1639f53.webp",
+      "name": "Afnan Supremacy Not Only Intense",
+      "type": "Eau de Parfum",
+      "rating": 4.8,
+      "reviews": 5607,
+      "price": 3300
+    },
+    {
+      "id": 2,
+      "image": "./assets/65ddb9be999afe402b39fbf8-armaf-club-de-nuit-intense-men-39-s-edt.jpg",
+      "name": "Armaf Club de Nuit Intense Man",
+      "type": "Pure Parfum",
+      "rating": 4.9,
+      "reviews": 45631,
+      "price": 3600
+    },
+    {
+      "id": 3,
+      "image": "./assets/811NG3nBJYL._AC_UF1000,1000_QL80_.jpg",
+      "name": "Davidoff Coolwater",
+      "type": "Eau de Toilette",
+      "rating": 4.4,
+      "reviews": 19982,
+      "price": 2400
+    }
+  ]
+  
