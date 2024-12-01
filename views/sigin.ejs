@@ -16,11 +16,12 @@
             <h1 class="login-heading">Login</h1>
             <h2>Welcome back!</h2> 
             
-            <input type="text" placeholder="Enter your email" class="email-input-button">
-            <input type="password" placeholder="Enter your password" class="password-input-button">
+            <form action="/signin" method="POST">
+                <input type="email" name="email" placeholder="Enter your email" class="email-input-button" required>
+                <input type="password" name="password" placeholder="Enter your password" class="password-input-button" required>
+                <div> <button  type="submit" class="login-button">Log In</button></div>
+            </form>
 
-            <div><a href="/" class="login-button" >LogIN</a></div>
-        
             <p class="login-body1">
                 Not a member? <a href="/signup"> Sign up </a><br><a href="/signup"> Forgot your password? </a>
             </p>

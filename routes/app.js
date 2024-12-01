@@ -1,4 +1,8 @@
 const express = require('express');
+const bcrypt = require('bcrypt');  // This imports bcryptjs
+const User = require('../models/User');  // Import the User model
+const Perfume = require('../models/Perfume'); // Ensure Perfume model is imported
+const multer = require('multer');  // <-- Add this line at the top of your file
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -34,13 +38,190 @@ router.get('/cart', (req, res) => {
     res.render('cart', { title: 'Cart' });
 });
 
-router.get('/signin', (req, res) => {
-    res.render('sigin', { title: 'SignIn' });
+router.use(express.urlencoded({ extended: true }));
+
+// Render Sign-Up Page (GET)
+router.get('/signup', (req, res) => {
+    res.render('singup', { title: 'Sign Up' });
 });
 
-router.get('/signup', (req, res) => {
-    res.render('singup', { title: 'SignUp' });
+// Handle Sign-Up Form Submission (POST)
+
+router.post('/signup', async (req, res) => {
+    const { name, mobile, email, password, recheck } = req.body;
+
+    // Log the incoming request data for debugging
+    console.log("Request body:", req.body);
+
+    // Validate that all fields are filled
+    if (!name || !mobile || !email || !password || !recheck) {
+        return res.status(400).send('All fields are required!');
+    }
+
+    // Check if passwords match
+    if (password !== recheck) {
+        return res.status(400).send('Passwords do not match!');
+    }
+
+    try {
+        // Check if the email already exists in the database
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).send('Email already registered');
+        }
+
+        // Hash the password before saving it
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create a new user object
+        const newUser = new User({
+            name,
+            mobile,
+            email,
+            password: hashedPassword,
+        });
+
+        // Save the user to the database
+        await newUser.save();
+
+        // Send success response
+        // res.status(201).send('User registered successfully!');
+        res.redirect('/');
+    } catch (error) {
+        // Log the error and send failure response
+        console.error("Error during registration:", error);  // Log the error in the server console
+        res.status(500).send(`Error registering user: ${error.message}`);  // Send detailed error message
+    }
 });
+
+router.get('/signin', (req, res) => {
+    res.render('sigin', { title: 'Sign In' });
+});
+
+// Handle Sign-In Form Submission (POST)
+// Sign-In Route (GET)
+router.get('/signin', (req, res) => {
+    res.render('signin', { title: 'Sign In' }); // Correct the typo "sigin" to "signin" if it's a typo
+});
+
+// Handle Sign-In Form Submission (POST)
+router.post('/signin', async (req, res) => {
+    const { email, password } = req.body;
+
+    // Log the incoming request data for debugging
+    console.log("Sign-In Request Body:", req.body);
+
+    // Validate input fields
+    if (!email || !password) {
+        return res.status(400).send('Email and password are required!');
+    }
+
+    try {
+        // Check if the user exists in the database
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).send('Invalid email or password!');
+        }
+
+        // Compare the entered password with the stored hashed password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).send('Invalid email or password!');
+        }
+
+        // If authentication is successful, store user in session
+        req.session.user = user; // Save user data to session
+
+        // Redirect to index.ejs (home page) after successful login
+        res.redirect('/');  // This assumes you have a route to render index.ejs
+
+    } catch (error) {
+        // Log the error and send failure response
+        console.error("Error during sign-in:", error);
+        res.status(500).send(`Error logging in: ${error.message}`);
+    }
+});
+
+module.exports = router;
+
+// Middleware to protect routes
+function isAuthenticated(req, res, next) {
+    if (req.session.user) {
+        return next();
+    }
+    res.redirect('/signin');
+}
+
+// Use the middleware for /index
+router.get('/index', isAuthenticated, (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/index.html'));
+});
+
+// Example protected route (Dashboard)
+router.get('/dashboard', isAuthenticated, (req, res) => {
+    res.render('dashboard', { user: req.session.user });
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error("Error during logout:", err);
+            return res.status(500).send('Unable to log out!');
+        }
+        res.redirect('/'); // Redirect to home page
+    });
+});
+
+// Middleware for handling form data and file uploads
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');  // Directory to store uploaded images
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));  // Unique filename
+    }
+});
+const upload = multer({ storage: storage });
+
+// Route to render the retailer form (for adding perfumes)
+router.get('/retailer', (req, res) => {
+    res.render('retailer');  // Render retailer form page
+});
+
+// Route to handle form submission and save perfume data
+router.post('/add-perfume', upload.single('image'), async (req, res) => {
+    const { name, discountedPrice, actualPrice } = req.body;
+    const imagePath = req.file.path;  // Path to the uploaded image
+
+    // Create a new perfume document
+    const newPerfume = new Perfume({
+        name,
+        discountedPrice,
+        actualPrice,
+        image: imagePath
+    });
+
+    try {
+        await newPerfume.save();  // Save to the database
+        res.redirect('/retailshop');  // Redirect to retailshop page after adding
+    } catch (error) {
+        console.error("Error saving perfume:", error);
+        res.status(500).send("Error saving perfume");
+    }
+});
+
+// Route to render the retailshop page and display all perfumes
+router.get('/retailshop', async (req, res) => {
+    try {
+        const perfumes = await Perfume.find();  // Retrieve all perfumes from DB
+        res.render('retailshop', { perfumes });  // Render retailshop page with perfumes
+    } catch (error) {
+        console.error("Error fetching perfumes:", error);
+        res.status(500).send("Error fetching perfumes");
+    }
+});
+
+
 
 router.get('/afnan', (req, res) => {
     res.render('innerParfum/afnan', { title: 'Afnan' });

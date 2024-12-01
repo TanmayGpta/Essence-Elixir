@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retail Shop</title>
+    <style>
+        .perfume-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            width: 250px;
+            text-align: center;
+        }
+        .perfume-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .card-info {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Perfume Shop</h1>
+    <div class="perfumes">
+        <% perfumes.forEach(perfume => { %>
+            <div class="perfume-card">
+                <img src="/<%= perfume.image %>" alt="<%= perfume.name %>">
+                <div class="card-info">
+                    <h2><%= perfume.name %></h2>
+                    <p>Discounted Price: $<%= perfume.discountedPrice %></p>
+                    <p>Actual Price: $<%= perfume.actualPrice %></p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</body>
+</html>
