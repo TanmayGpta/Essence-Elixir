@@ -408,6 +408,7 @@ a {
     padding: 2rem 0; 
     gap: 4rem; 
     align-items: center;
+    justify-content: space-around;
 }
 /* COMBOS */
 .combo_box{

@@ -306,7 +306,7 @@ height: 3rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    margin-left: 10px;
 }
 
 .product-image img {
@@ -410,12 +410,13 @@ height: 3rem;
 }
 
 .items {
-    margin: 0 auto;
+    margin: 0 10px 0 10px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding: 2rem 0; 
     gap: 4rem; 
     align-items: center;
+    justify-content: space-between;
 }
 
 /* click buttons */
@@ -590,4 +591,7 @@ padding: 0;
 .footcontact  i {
   font-size: 1.75rem;
   overflow:hidden;
+}
+.retailer{
+  margin: 10rem;
 }

@@ -411,12 +411,13 @@ height: 3rem;
 }
 
 .items {
-  margin: 0 auto;
+  margin: 0 30px 0 30px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 2rem 0;
   gap: 4rem;
   align-items: center;
+  justify-content: space-around;
   width: 100%;
   box-sizing: border-box; /* Ensure padding and border are included in the width and height of the element */
 }
