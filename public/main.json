@@ -1,4 +1,5 @@
-[
+{
+"products": [
     {
       "id": 1,
       "img": "./assets/rn-image_picker_lib_temp_a3791f6e-a304-4732-a5a0-7b50b1639f53.webp",
@@ -16,7 +17,8 @@
       "category": "Pure Parfum",
       "rating": 4.9,
       "reviews": 45631,
-      "cost": 3600
+      "cost": 3600,
+      "url": "/armaf"
     },
     {
       "id": 3,
@@ -25,7 +27,8 @@
       "category": "Eau de Toilette",
       "rating": 4.4,
       "reviews": 19982,
-      "cost": 2400
+      "cost": 2400,
+      "url": "/davidoff"
     },
     {
       "id": 4,
@@ -98,7 +101,8 @@
       "category": "Eau de Parfum",
       "rating": 3.9,
       "reviews": 5607,
-      "cost": 550
+      "cost": 550,
+       "url": "/beardo"
     },
     {
       "id": 12,
@@ -164,4 +168,5 @@
       "cost": 1300
     }
   ]
+}
   

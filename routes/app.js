@@ -38,6 +38,24 @@ router.get('/cart', (req, res) => {
     res.render('cart', { title: 'Cart' });
 });
 
+router.get('/afnan', (req, res) => {
+    res.render('innerParfum/afnan', { title: 'Afnan' });
+});
+
+router.get('/armaf', (req, res) => {
+    res.render('innerParfum/armaf', { title: 'Armaf' });
+});
+
+router.get('/davidoff', (req, res) => {
+    res.render('innerParfum/davidoff', { title: 'Davidoff' });
+});
+
+router.get('/beardo', (req, res) => {
+    res.render('innerParfum/beardo', { title: 'Beardo' });
+});
+
+
+
 router.use(express.urlencoded({ extended: true }));
 
 // Render Sign-Up Page (GET)
@@ -223,9 +241,7 @@ router.get('/retailshop', async (req, res) => {
 
 
 
-router.get('/afnan', (req, res) => {
-    res.render('innerParfum/afnan', { title: 'Afnan' });
-});
+
 
 
 

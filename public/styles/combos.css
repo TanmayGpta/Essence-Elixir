@@ -402,7 +402,7 @@ a {
   }
   
   .items {
-    margin: 0 auto;
+    margin: 0 0 0 100px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding: 2rem 0; 

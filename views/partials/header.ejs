@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <script src="/scripts/login.js" defer></script>
 </head>
 <body>
 <header>
@@ -81,9 +82,9 @@
                     <a href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
                 </div>
                 <div class="login">
-                    <a href="/signin">
                         <div class="button-container">
-                            <button class="btn login-btn">Log In</button>
+                            <button class="btn login-btn" id="loginBtn">Log In</button>
+                            <button class="btn logout-btn" id="logoutBtn" style="display:none;">Log Out </button>
                         </div>
                     </a>
                 </div>

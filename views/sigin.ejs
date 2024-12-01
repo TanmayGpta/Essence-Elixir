@@ -16,9 +16,9 @@
             <h1 class="login-heading">Login</h1>
             <h2>Welcome back!</h2> 
             
-            <form action="/signin" method="POST">
-                <input type="email" name="email" placeholder="Enter your email" class="email-input-button" required>
-                <input type="password" name="password" placeholder="Enter your password" class="password-input-button" required>
+            <form action="/signin" method="POST" id="loginForm">
+                <input type="email" id="email" name="email" placeholder="Enter your email" class="email-input-button" required>
+                <input type="password" id="password" name="password" placeholder="Enter your password" class="password-input-button" required>
                 <div> <button  type="submit" class="login-button">Log In</button></div>
             </form>
 
@@ -34,5 +34,7 @@
             <img src="/assets/knasdnansdnjknasda.jpeg">
         </div>
     </div>
+    <script src="/scripts/login.js" defer></script>
 </body>
+
 </html>
