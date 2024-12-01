@@ -51,6 +51,7 @@ app.use((req, res, next) => {
     next();
 });
 
+
 // MongoDB connection
 let dbconnect = require('./connectdb/connect.js');
 dbconnect(); // Initialize MongoDB connection
@@ -60,9 +61,31 @@ app.get('/', (req, res) => {
 });
 
 
+
+
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve uploaded files
 
+app.post('/add-perfume', upload.single('image'), async (req, res) => {
+    try {
+        const { name, discountedPrice, actualPrice } = req.body;
+        const image = req.file.path;
+
+        const newPerfume = new Perfume({
+            name,
+            discountedPrice,
+            actualPrice,
+            image,
+        });
+
+        await newPerfume.save();
+        res.status(201).send('Perfume added successfully!');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while adding the perfume.');
+    }
+});
 
 
 
@@ -73,7 +96,28 @@ app.use(session({
     cookie: { secure: false } // For local development, set secure to false. In production, set to true with HTTPS
 }));
 
+app.get('/retailer', (req, res) => {
+    res.render('retailer'); // Render the retail.ejs file
+});
 
+app.get('/retailershop', async (req, res) => {
+    try {
+        const perfumes = await Perfume.find(); // Fetch all perfume records from MongoDB
+        res.render('retailershop', { perfumes }); // Pass the data to the EJS template
+    } catch (error) {
+        console.error("Error fetching perfumes:", error);
+        res.status(500).send("An error occurred while fetching perfumes.");
+    }
+});
+
+
+
+////<<<<<<<<<<<<<<<<<
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+const Perfume = require('./models/Perfume'); // Adjust the path based on your project structure
+
+/////>>>>>>>>>>>>>>>>>>
 
 // Static files and views setup
 app.use(express.static(path.join(__dirname, 'public')));

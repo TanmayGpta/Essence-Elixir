@@ -190,54 +190,8 @@ router.get('/logout', (req, res) => {
     });
 });
 
-// Middleware for handling form data and file uploads
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');  // Directory to store uploaded images
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));  // Unique filename
-    }
-});
-const upload = multer({ storage: storage });
+////////
 
-// Route to render the retailer form (for adding perfumes)
-router.get('/retailer', (req, res) => {
-    res.render('retailer');  // Render retailer form page
-});
-
-// Route to handle form submission and save perfume data
-router.post('/add-perfume', upload.single('image'), async (req, res) => {
-    const { name, discountedPrice, actualPrice } = req.body;
-    const imagePath = req.file.path;  // Path to the uploaded image
-
-    // Create a new perfume document
-    const newPerfume = new Perfume({
-        name,
-        discountedPrice,
-        actualPrice,
-        image: imagePath
-    });
-
-    try {
-        await newPerfume.save();  // Save to the database
-        res.redirect('/retailshop');  // Redirect to retailshop page after adding
-    } catch (error) {
-        console.error("Error saving perfume:", error);
-        res.status(500).send("Error saving perfume");
-    }
-});
-
-// Route to render the retailshop page and display all perfumes
-router.get('/retailshop', async (req, res) => {
-    try {
-        const perfumes = await Perfume.find();  // Retrieve all perfumes from DB
-        res.render('retailshop', { perfumes });  // Render retailshop page with perfumes
-    } catch (error) {
-        console.error("Error fetching perfumes:", error);
-        res.status(500).send("Error fetching perfumes");
-    }
-});
 
 
 
